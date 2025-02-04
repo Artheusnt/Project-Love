@@ -4,105 +4,18 @@
     <title>Interactive Love Button ❤️</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /* Base styles remain the same */
-        body {
-            background: #ffe6f2;
-            min-height: 100vh;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            font-family: 'Arial', sans-serif;
-        }
-
-        .container {
-            text-align: center;
-            z-index: 1;
-            position: relative;
-        }
-
-        /* Enhanced button styles */
-        .love-button {
-            padding: clamp(15px, 5vw, 30px) clamp(30px, 8vw, 50px);
-            font-size: clamp(1.2rem, 4vw, 1.5rem);
-            background: #ff3385;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            margin-top: 20px;
-            min-width: 200px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Button hover and active states */
-        .love-button:hover {
-            transform: scale(1.05);
-            background: #ff0066;
-        }
-
-        .love-button:active {
-            transform: scale(0.95);
-        }
-
-        /* Button pulse animation */
-        .love-button.pulse {
-            animation: buttonPulse 0.5s ease-out;
-        }
-
-        @keyframes buttonPulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(0); opacity: 0; }
-        }
-
-        /* Heart and note styles remain similar */
-        .heart {
-            position: absolute;
-            font-size: 24px;
-            animation: float 3s linear;
-            will-change: transform;
-            z-index: 0;
-        }
-
+        /* Added random rotation to notes */
         .love-note {
-            position: absolute;
-            font-size: clamp(1em, 3vw, 1.3em);
-            padding: 15px 25px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            animation: noteFloat 5s ease-out forwards;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-            z-index: 2;
-            max-width: 80vw;
-            text-align: center;
-            will-change: transform;
+            transform: rotate(-5deg);
+            pointer-events: none;
         }
 
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-        }
-
-        @keyframes noteFloat {
-            0% { transform: translateY(0) scale(1); opacity: 1; }
-            70% { transform: translateY(-40vh) scale(1); opacity: 1; }
-            100% { transform: translateY(-100vh) scale(0); opacity: 0; }
-        }
+        /* Keep other existing styles the same */
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Press the Love Button ❤️</h1>
-        <button class="love-button" onclick="activateLoveBlast(event)" aria-label="Trigger love animation">
-            💖 Click to Explode Love 💖
-        </button>
-    </div>
-
+    <!-- Keep existing HTML structure the same -->
+    
     <script>
         let isAnimating = false;
         
@@ -111,14 +24,10 @@
             isAnimating = true;
             
             const button = event.target;
-            
-            // Add pulse animation class
             button.classList.add('pulse');
             
-            // Wait for pulse animation to complete
             setTimeout(() => {
                 createLoveBlast(button);
-                // Reset button after animation
                 setTimeout(() => {
                     button.classList.remove('pulse');
                     button.style.transform = 'scale(1)';
@@ -133,22 +42,33 @@
             const centerX = rect.left + rect.width/2;
             const centerY = rect.top + rect.height/2;
 
-            // Create love notes with random positions
+            // Slowed down quote appearance and improved positioning
             romanticMessages.forEach((message, index) => {
                 setTimeout(() => {
                     const note = document.createElement('div');
                     note.className = 'love-note';
                     note.textContent = message;
-                    note.style.left = `${centerX + Math.random() * 200 - 100}px`;
-                    note.style.top = `${centerY + Math.random() * 100 - 50}px`;
-                    note.style.color = `hsl(${Math.random() * 360}deg, 70%, 45%)`;
-                    document.body.appendChild(note);
                     
+                    // Random circular positioning around center
+                    const angle = Math.random() * Math.PI * 2;
+                    const radius = 100 + Math.random() * 150; // 100-250px from center
+                    const xPos = centerX + Math.cos(angle) * radius;
+                    const yPos = centerY + Math.sin(angle) * radius;
+                    
+                    note.style.left = `${xPos}px`;
+                    note.style.top = `${yPos}px`;
+                    note.style.position = 'absolute';
+                    note.style.color = `hsl(${Math.random() * 360}deg, 70%, 45%)`;
+                    
+                    // Random rotation between -15 and 15 degrees
+                    note.style.transform = `rotate(${Math.random() * 30 - 15}deg)`;
+                    
+                    document.body.appendChild(note);
                     setTimeout(() => note.remove(), 5000);
-                }, index * 150);
+                }, index * 300); // Slowed down from 150ms to 300ms
             });
 
-            // Create heart explosion with variation
+            // Heart explosion remains the same
             for(let i = 0; i < 30; i++) {
                 const heart = document.createElement('div');
                 heart.className = 'heart';
@@ -162,23 +82,7 @@
             }
         }
 
-        // Enhanced romantic messages
-        const romanticMessages = [
-            "You're my forever sunshine 🌞",
-            "My heartbeat syncs with yours 💞",
-            "Every second with you is gold ⏳",
-            "You paint my world rainbow 🌈",
-            "Your voice is my favorite melody 🎵",
-            "Growing in love daily with you 🌱",
-            "Perfect match? It's us! 💑",
-            "Eternity with you isn't enough ⏳",
-            "Your eyes are my favorite view 👀",
-            "Soulmates in every universe 🌌",
-            "Love you more than words 📖",
-            "You're my happy place 🏰",
-            "My always and forever 💍",
-            "Better together every day 📆"
-        ];
+        // Keep romanticMessages array the same
     </script>
 </body>
 </html>
