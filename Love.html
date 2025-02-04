@@ -3,34 +3,81 @@
 <head>
     <title>For My Love ❤️</title>
     <style>
-        /* Previous styles remain... */
+        body {
+            background: #ffe6f2;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 1;
+        }
+
+        .love-button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            background: #ff3385;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.3s, background 0.3s;
+            margin-top: 20px;
+        }
+
+        .love-button:hover {
+            transform: scale(1.1);
+            background: #ff0066;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            animation: float 3s linear;
+        }
 
         .love-note {
-            /* Update animation duration */
+            position: absolute;
+            font-size: 1.3em;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             animation: noteFloat 5s ease-out forwards;
-            font-size: 1.3em; /* Larger text */
-            padding: 15px 25px; /* More padding */
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
         }
 
         @keyframes noteFloat {
             0% { transform: translateY(0) scale(1); opacity: 1; }
-            70% { transform: translateY(-40vh) scale(1); opacity: 1; } /* Slow down */
+            70% { transform: translateY(-40vh) scale(1); opacity: 1; }
             100% { transform: translateY(-100vh) scale(0); opacity: 0; }
         }
     </style>
 </head>
 <body>
-    <!-- Previous HTML remains the same -->
+    <div class="container">
+        <h1>For My One and Only ❤️</h1>
+        <button class="love-button" onclick="createLoveBlast(event)">Click for Love Surprise! 💖</button>
+    </div>
 
     <script>
-        // Modified createLoveBlast function
         function createLoveBlast(event) {
             const button = event.target;
             const rect = button.getBoundingClientRect();
             const centerX = rect.left + rect.width/2;
             const centerY = rect.top + rect.height/2;
 
-            // Create love notes with staggered timing
+            // Create love notes
             romanticMessages.forEach((message, index) => {
                 setTimeout(() => {
                     const note = document.createElement('div');
@@ -41,12 +88,11 @@
                     note.style.color = `hsl(${Math.random() * 360}deg, 70%, 45%)`;
                     document.body.appendChild(note);
                     
-                    // Remove after animation
                     setTimeout(() => note.remove(), 5000);
-                }, index * 400); // 400ms delay between each note
+                }, index * 400);
             });
 
-            // Heart explosion (unchanged)
+            // Create hearts
             for(let i = 0; i < 20; i++) {
                 const heart = document.createElement('div');
                 heart.className = 'heart';
@@ -59,7 +105,6 @@
             }
         }
 
-        // Updated romantic messages array
         const romanticMessages = [
             "You're my sunshine on cloudy days ☀️",
             "My heart skips a beat when you smile 💓",
@@ -70,8 +115,6 @@
             "You're my perfect match 💞",
             "Forever isn't long enough with you ⏳"
         ];
-
-        // Rest of the code remains the same
     </script>
 </body>
-  </html>
+</html>
