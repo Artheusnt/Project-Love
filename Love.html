@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>For My Love ❤️</title>
+    <style>
+        /* Previous styles remain... */
+
+        .love-note {
+            /* Update animation duration */
+            animation: noteFloat 5s ease-out forwards;
+            font-size: 1.3em; /* Larger text */
+            padding: 15px 25px; /* More padding */
+        }
+
+        @keyframes noteFloat {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            70% { transform: translateY(-40vh) scale(1); opacity: 1; } /* Slow down */
+            100% { transform: translateY(-100vh) scale(0); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Previous HTML remains the same -->
+
+    <script>
+        // Modified createLoveBlast function
+        function createLoveBlast(event) {
+            const button = event.target;
+            const rect = button.getBoundingClientRect();
+            const centerX = rect.left + rect.width/2;
+            const centerY = rect.top + rect.height/2;
+
+            // Create love notes with staggered timing
+            romanticMessages.forEach((message, index) => {
+                setTimeout(() => {
+                    const note = document.createElement('div');
+                    note.className = 'love-note';
+                    note.textContent = message;
+                    note.style.left = centerX + Math.random() * 100 - 50 + 'px';
+                    note.style.top = centerY + Math.random() * 50 - 25 + 'px';
+                    note.style.color = `hsl(${Math.random() * 360}deg, 70%, 45%)`;
+                    document.body.appendChild(note);
+                    
+                    // Remove after animation
+                    setTimeout(() => note.remove(), 5000);
+                }, index * 400); // 400ms delay between each note
+            });
+
+            // Heart explosion (unchanged)
+            for(let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '💖';
+                heart.style.left = centerX + 'px';
+                heart.style.top = centerY + 'px';
+                heart.style.animation = `float ${Math.random() * 2 + 1}s linear`;
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 3000);
+            }
+        }
+
+        // Updated romantic messages array
+        const romanticMessages = [
+            "You're my sunshine on cloudy days ☀️",
+            "My heart skips a beat when you smile 💓",
+            "Every moment with you is precious ⏳",
+            "You make my world colorful 🌈",
+            "Your laugh is my favorite sound 🎶",
+            "I fall for you more every day 🍂",
+            "You're my perfect match 💞",
+            "Forever isn't long enough with you ⏳"
+        ];
+
+        // Rest of the code remains the same
+    </script>
+</body>
+  </html>
