@@ -2,6 +2,8 @@
 <html>
 <head>
     <title>For My Love ❤️</title>
+    <!-- Added viewport meta for mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             background: #ffe6f2;
@@ -17,11 +19,12 @@
         .container {
             text-align: center;
             z-index: 1;
+            position: relative;
         }
 
         .love-button {
-            padding: 15px 30px;
-            font-size: 1.2em;
+            padding: clamp(15px, 5vw, 30px) clamp(30px, 8vw, 50px);
+            font-size: clamp(1.2rem, 4vw, 1.5rem);
             background: #ff3385;
             color: white;
             border: none;
@@ -29,6 +32,7 @@
             cursor: pointer;
             transition: transform 0.3s, background 0.3s;
             margin-top: 20px;
+            min-width: 200px;
         }
 
         .love-button:hover {
@@ -40,16 +44,23 @@
             position: absolute;
             font-size: 24px;
             animation: float 3s linear;
+            will-change: transform;
+            z-index: 0;
         }
 
         .love-note {
             position: absolute;
-            font-size: 1.3em;
+            font-size: clamp(1em, 3vw, 1.3em);
             padding: 15px 25px;
             background: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             animation: noteFloat 5s ease-out forwards;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            max-width: 80vw;
+            text-align: center;
+            will-change: transform;
         }
 
         @keyframes float {
@@ -67,11 +78,19 @@
 <body>
     <div class="container">
         <h1>For My One and Only ❤️</h1>
-        <button class="love-button" onclick="createLoveBlast(event)">Click for Love Surprise! 💖</button>
+        <button class="love-button" onclick="createLoveBlast(event)" aria-label="Trigger love animation">
+            Click for Love Surprise! 💖
+        </button>
     </div>
 
     <script>
+        // Added animation debouncing
+        let isAnimating = false;
+        
         function createLoveBlast(event) {
+            if(isAnimating) return;
+            isAnimating = true;
+            
             const button = event.target;
             const rect = button.getBoundingClientRect();
             const centerX = rect.left + rect.width/2;
@@ -83,8 +102,8 @@
                     const note = document.createElement('div');
                     note.className = 'love-note';
                     note.textContent = message;
-                    note.style.left = centerX + Math.random() * 100 - 50 + 'px';
-                    note.style.top = centerY + Math.random() * 50 - 25 + 'px';
+                    note.style.left = `${centerX + Math.random() * 100 - 50}px`;
+                    note.style.top = `${centerY + Math.random() * 50 - 25}px`;
                     note.style.color = `hsl(${Math.random() * 360}deg, 70%, 45%)`;
                     document.body.appendChild(note);
                     
@@ -97,12 +116,17 @@
                 const heart = document.createElement('div');
                 heart.className = 'heart';
                 heart.innerHTML = '💖';
-                heart.style.left = centerX + 'px';
-                heart.style.top = centerY + 'px';
+                heart.style.left = `${centerX}px`;
+                heart.style.top = `${centerY}px`;
                 heart.style.animation = `float ${Math.random() * 2 + 1}s linear`;
                 document.body.appendChild(heart);
                 setTimeout(() => heart.remove(), 3000);
             }
+
+            // Reset animation lock
+            setTimeout(() => {
+                isAnimating = false;
+            }, 2000);
         }
 
         const romanticMessages = [
