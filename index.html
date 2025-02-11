@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine's Day</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">❤️ Valentine's Day ❤️</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#stories">Stories</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="burger">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
+    </div>
+  </nav>
+
+  <section id="home" class="hero-section">
+    <div class="hero-content">
+      <h1>Spread the Love</h1>
+      <button onclick="location.href='#love-letter-generator'">Send Love Note</button>
+    </div>
+    <div class="heart"></div>
+  </section>
+
+  <section id="love-letter-generator">
+    <h2>Write Your Love Letter</h2>
+    <input type="text" id="recipient" placeholder="Recipient Name" />
+    <textarea id="message" placeholder="Your Message..."></textarea>
+    <button onclick="generateLetter()">Generate</button>
+    <div id="preview"></div>
+  </section>
+
+  <audio id="giggleSound" src="giggle.mp3"></audio>
+  <button onclick="playGiggle()">Click Me!</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
