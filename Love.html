@@ -1,144 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>For My Love ❤️</title>
-    <!-- Added viewport meta for mobile -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            background: #ffe6f2;
-            min-height: 100vh;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            font-family: 'Arial', sans-serif;
-        }
-
-        .container {
-            text-align: center;
-            z-index: 1;
-            position: relative;
-        }
-
-        .love-button {
-            padding: clamp(15px, 5vw, 30px) clamp(30px, 8vw, 50px);
-            font-size: clamp(1.2rem, 4vw, 1.5rem);
-            background: #ff3385;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            transition: transform 0.3s, background 0.3s;
-            margin-top: 20px;
-            min-width: 200px;
-        }
-
-        .love-button:hover {
-            transform: scale(1.1);
-            background: #ff0066;
-        }
-
-        .heart {
-            position: absolute;
-            font-size: 24px;
-            animation: float 3s linear;
-            will-change: transform;
-            z-index: 0;
-        }
-
-        .love-note {
-            position: absolute;
-            font-size: clamp(1em, 3vw, 1.3em);
-            padding: 15px 25px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            animation: noteFloat 5s ease-out forwards;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-            z-index: 2;
-            max-width: 80vw;
-            text-align: center;
-            will-change: transform;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-        }
-
-        @keyframes noteFloat {
-            0% { transform: translateY(0) scale(1); opacity: 1; }
-            70% { transform: translateY(-40vh) scale(1); opacity: 1; }
-            100% { transform: translateY(-100vh) scale(0); opacity: 0; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine's Day</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>For My One and Only ❤️</h1>
-        <button class="love-button" onclick="createLoveBlast(event)" aria-label="Trigger love animation">
-            Click for Love Surprise! 💖
-        </button>
+  <nav class="navbar">
+    <div class="logo">❤️ Valentine's Day ❤️</div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#stories">Stories</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="burger">
+      <div class="line1"></div>
+      <div class="line2"></div>
+      <div class="line3"></div>
     </div>
+  </nav>
 
-    <script>
-        // Added animation debouncing
-        let isAnimating = false;
-        
-        function createLoveBlast(event) {
-            if(isAnimating) return;
-            isAnimating = true;
-            
-            const button = event.target;
-            const rect = button.getBoundingClientRect();
-            const centerX = rect.left + rect.width/2;
-            const centerY = rect.top + rect.height/2;
+  <section id="home" class="hero-section">
+    <div class="hero-content">
+      <h1>Spread the Love</h1>
+      <button onclick="location.href='#love-letter-generator'">Send Love Note</button>
+    </div>
+    <div class="heart"></div>
+  </section>
 
-            // Create love notes
-            romanticMessages.forEach((message, index) => {
-                setTimeout(() => {
-                    const note = document.createElement('div');
-                    note.className = 'love-note';
-                    note.textContent = message;
-                    note.style.left = `${centerX + Math.random() * 100 - 50}px`;
-                    note.style.top = `${centerY + Math.random() * 50 - 25}px`;
-                    note.style.color = `hsl(${Math.random() * 360}deg, 70%, 45%)`;
-                    document.body.appendChild(note);
-                    
-                    setTimeout(() => note.remove(), 9000);
-                }, index * 400);
-            });
+  <section id="love-letter-generator">
+    <h2>Write Your Love Letter</h2>
+    <input type="text" id="recipient" placeholder="Recipient Name" />
+    <textarea id="message" placeholder="Your Message..."></textarea>
+    <button onclick="generateLetter()">Generate</button>
+    <div id="preview"></div>
+  </section>
 
-            // Create hearts
-            for(let i = 0; i < 20; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'heart';
-                heart.innerHTML = '💖';
-                heart.style.left = `${centerX}px`;
-                heart.style.top = `${centerY}px`;
-                heart.style.animation = `float ${Math.random() * 2 + 1}s linear`;
-                document.body.appendChild(heart);
-                setTimeout(() => heart.remove(), 3000);
-            }
+  <audio id="giggleSound" src="giggle.mp3"></audio>
+  <button onclick="playGiggle()">Click Me!</button>
 
-            // Reset animation lock
-            setTimeout(() => {
-                isAnimating = false;
-            }, 2000);
-        }
-
-        const romanticMessages = [
-            "You're my sunshine on cloudy days ☀️",
-            "My heart skips a beat when you smile 💓",
-            "Every moment with you is precious ⏳",
-            "You make my world colorful 🌈",
-            "Your laugh is my favorite sound 🎶",
-            "I fall for you more every day 🍂",
-            "You're my perfect match 💞",
-            "Forever isn't long enough with you ⏳"
-        ];
-    </script>
+  <script src="script.js"></script>
 </body>
 </html>
